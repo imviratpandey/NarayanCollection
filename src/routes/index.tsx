@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, MessageCircle, ShieldCheck, Sparkles, Truck, Volume2, VolumeX } from "lucide-react";
@@ -19,8 +19,23 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+const HINDI_SONGS = [
+  "Umqb9DrckMY", // Tum Hi Ho
+  "284Ov7ysmfA", // Channa Mereya
+  "jHNNMj5bNQw", // Kabira
+  "BddP6PYo2gs", // Kesariya
+  "bzSTpdcs-EI", // Chaleya
+];
+
 function Index() {
   const [isMuted, setIsMuted] = useState(true);
+  const [playlist, setPlaylist] = useState<string[]>([]);
+
+  useEffect(() => {
+    // Shuffle the songs on client-side to avoid hydration mismatch
+    const shuffled = [...HINDI_SONGS].sort(() => Math.random() - 0.5);
+    setPlaylist(shuffled);
+  }, []);
 
   const { data: featured } = useQuery({
     queryKey: ["featured-products"],
@@ -39,14 +54,16 @@ function Index() {
 
   return (
     <div className="overflow-x-clip bg-background">
-      {/* Hidden Audio Player for Hindi & Soft English Playlist */}
-      <iframe
-        src={`https://www.youtube.com/embed/VAdGW7QDJiU?autoplay=1&loop=1&playlist=K1vJE3QAA0,2Vv-BfVoq4g,BddP6PYo2gs,GxldQ9eX2c&mute=${isMuted ? 1 : 0}&enablejsapi=1`}
-        title="Background Music Playlist"
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        className="absolute w-1 h-1 opacity-0 pointer-events-none -z-50"
-      />
+      {/* Hidden Audio Player for Hindi Playlist */}
+      {playlist.length > 0 && (
+        <iframe
+          src={`https://www.youtube.com/embed/${playlist[0]}?autoplay=1&loop=1&playlist=${playlist.slice(1).join(",")},${playlist[0]}&mute=${isMuted ? 1 : 0}&enablejsapi=1`}
+          title="Background Music Playlist"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          className="absolute w-1 h-1 opacity-0 pointer-events-none -z-50"
+        />
+      )}
 
       {/* Floating Audio Toggle */}
       <div className="fixed bottom-6 left-6 z-50">
