@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, MessageCircle, ShieldCheck, Sparkles, Truck, Volume2, VolumeX } from "lucide-react";
+import { ArrowRight, MessageCircle, ShieldCheck, SkipForward, Sparkles, Truck, Volume2, VolumeX } from "lucide-react";
 
 import owner from "@/assets/owner-model.png.asset.json";
 import { ProductCard } from "@/components/product-card";
@@ -37,6 +37,17 @@ function Index() {
     setPlaylist(shuffled);
   }, []);
 
+  const nextTrack = () => {
+    setPlaylist((prev) => {
+      if (prev.length === 0) return prev;
+      const newPlaylist = [...prev];
+      const first = newPlaylist.shift()!;
+      newPlaylist.push(first);
+      return newPlaylist;
+    });
+    setIsMuted(false);
+  };
+
   const { data: featured } = useQuery({
     queryKey: ["featured-products"],
     queryFn: async () => {
@@ -65,8 +76,8 @@ function Index() {
         />
       )}
 
-      {/* Floating Audio Toggle */}
-      <div className="fixed bottom-6 left-6 z-50">
+      {/* Floating Audio Controls */}
+      <div className="fixed bottom-6 left-6 z-50 flex items-center gap-3">
         <Button
           variant="secondary"
           size="icon"
@@ -74,6 +85,15 @@ function Index() {
           onClick={() => setIsMuted(!isMuted)}
         >
           {isMuted ? <VolumeX className="h-6 w-6" /> : <Volume2 className="h-6 w-6 text-primary animate-pulse" />}
+        </Button>
+        <Button
+          variant="secondary"
+          size="icon"
+          className="h-12 w-12 rounded-full shadow-lg hover:scale-110 transition-transform backdrop-blur-md bg-background/50 border border-border"
+          onClick={nextTrack}
+          title="Next Track"
+        >
+          <SkipForward className="h-5 w-5 text-foreground/80" />
         </Button>
       </div>
 
