@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ORD-12345",
+    "customer": "John Doe",
+    "date": "2026-08-19T10:00:00Z",
+    "status": "processing",
+    "items": "2x Premium Baggy Shirt",
+    "total": 4500
+  },
+  {
+    "id": "ORD-12346",
+    "customer": "Rahul Sharma",
+    "date": "2026-08-18T14:30:00Z",
+    "status": "shipped",
+    "items": "1x Ethnic Kurta",
+    "total": 2200
+  },
+  {
+    "id": "ORD-12347",
+    "customer": "Priya Singh",
+    "date": "2026-08-17T09:15:00Z",
+    "status": "delivered",
+    "items": "3x Oversized Tees",
+    "total": 3600
+  }
+]
