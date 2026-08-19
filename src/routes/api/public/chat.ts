@@ -11,11 +11,7 @@ export const Route = createFileRoute("/api/public/chat")({
           const body = await request.json();
           const { message, history } = body;
 
-          // Read the Gemini API Key from settings.json
-          const settingsPath = path.join(process.cwd(), "src/data/settings.json");
-          const settingsData = await fs.readFile(settingsPath, "utf-8");
-          const settings = JSON.parse(settingsData);
-          const apiKey = settings.geminiApiKey || process.env.GEMINI_API_KEY;
+          const apiKey = process.env.GEMINI_API_KEY;
 
           if (!apiKey) {
             return new Response(
