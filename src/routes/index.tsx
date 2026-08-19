@@ -89,7 +89,7 @@ function Index() {
         {/* Video Background */}
         <div className="absolute inset-0 z-0 bg-black overflow-hidden pointer-events-none">
           <iframe
-            className="absolute top-1/2 left-1/2 w-[200vw] h-[200vh] min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 opacity-70"
+            className="absolute top-1/2 left-1/2 w-screen h-[56.25vw] min-h-screen min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 opacity-70"
             src="https://www.youtube.com/embed/lM02vNMRRB0?autoplay=1&mute=1&controls=0&loop=1&playlist=lM02vNMRRB0&showinfo=0&rel=0"
             title="Fashion Background"
             frameBorder="0"
